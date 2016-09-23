@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SimplITalk</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body ng-app="RBS.WebPortal">
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        SimplITalk</h1>
+                    </a>
+                </li>
+                <li><a href="#">Recent Logs</a></li>
+                <li><a href="#">Completed Logs</a></li>
+                <li><a href="#">Logs</a></li>
+                
+                
+                
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3> Recent Calls </h3>
+
+                        <div>
+                        	<table id="ordersTable" class="table table-bordered table-striped">
+			                <thead>
+			                	<tr>
+			                		<td>Customer #</td>
+			                		<td>Customer Name</td>
+			                		<td>Called For</td>
+			                	</tr>
+			                </thead>
+			                <tbody>
+			                	<tr>
+			                		<td>1</td>
+			                		<td>2</td>
+			                		<td>3</td>
+			                	</tr>
+			                	<tr>
+			                		<td>1</td>
+			                		<td>2</td>
+			                		<td>3</td>
+			                	</tr>
+			                	<tr>
+			                		<td>1</td>
+			                		<td>2</td>
+			                		<td>3</td>
+			                	</tr>
+			                </tbody>
+			              </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3> Queued Calls </h3>
+
+                        <div>
+                        	<table id="queuedlogs" class="table table-bordered table-striped">
+			                <thead>
+			                	<tr>
+			                		<td>Customer #</td>
+			                		<td>Customer Name</td>
+			                		<td>Called For</td>
+			                	</tr>
+			                </thead>
+			                <tbody>
+			                	<tr>
+			                		<td>1</td>
+			                		<td>2</td>
+			                		<td>3</td>
+			                	</tr>
+			                	<tr>
+			                		<td>1</td>
+			                		<td>2</td>
+			                		<td>3</td>
+			                	</tr>
+			                	<tr>
+			                		<td>1</td>
+			                		<td>2</td>
+			                		<td>3</td>
+			                	</tr>
+			                </tbody>
+			              </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Customer Info</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+        <div class="row">
+        <div class="col-xs-6">
+        	<div class="form-group row">
+  <label for="example-text-input" class="col-xs-7 col-form-label">Customer #</label>
+  <div class="col-xs-5">
+    <input class="form-control" type="text" value="Artisanal kale" id="cusID">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-search-input" class="col-xs-7 col-form-label">Customer Name</label>
+  <div class="col-xs-5">
+    <input class="form-control" type="search" value="How do I shoot web" id="cusName">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-text-input" class="col-xs-7 col-form-label">Account #</label>
+  <div class="col-xs-5">
+    <input class="form-control" type="text" value="Artisanal kale" id="cusID">
+  </div>
+</div>
+
+<div class="form-group row">
+  <label for="example-url-input" class="col-xs-7 col-form-label">Account Type</label>
+  <div class="col-xs-5">
+    <input class="form-control" type="url" value="http://getbootstrap.com" id="cusAccType">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-tel-input" class="col-xs-7 col-form-label">Account Balance</label>
+  <div class="col-xs-5">
+    <input class="form-control" type="tel" value="1-(555)-555-5555" id="cusAccBal">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-xs-7 col-form-label">Debit Card #</label>
+  <div class="col-xs-5">
+    <input class="form-control" type="text" value="4545-9898-2345-9898" id="cusDCN">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-number-input" class="col-xs-7 col-form-label">Address</label>
+  <div class="col-xs-5">
+    <textarea class="form-control" type="number" value="42" id="cusAddress"></textarea>
+  </div>
+</div>
+
+        </div>
+        <div class="col-xs-6">
+        	
+        	<div class="row">
+                    <div class="col-lg-12">
+                        <h4> Recent Transcation </h4>
+
+                        <div>
+                        	<table id="transcationTable" class="table table-bordered table-striped">
+			                <thead>
+			                	<tr>
+			                		<td>Transcation #</td>
+			                		<td>Transcation Details</td>
+			                		<td>Transcation Value</td>
+			                	</tr>
+			                </thead>
+			                <tbody>
+			                	<tr>
+			                		<td>1</td>
+			                		<td>2</td>
+			                		<td>3</td>
+			                	</tr>
+			                	<tr>
+			                		<td>1</td>
+			                		<td>2</td>
+			                		<td>3</td>
+			                	</tr>
+			                	<tr>
+			                		<td>1</td>
+			                		<td>2</td>
+			                		<td>3</td>
+			                	</tr>
+			                </tbody>
+			              </table>
+                        </div>
+
+
+                    </div>
+                </div>
+
+        </div>
+        </div>
+        <div class="row">
+
+        	<div class="spinner">
+			  <div class="bounce1"></div>
+			  <div class="bounce2"></div>
+			  <div class="bounce3"></div>
+			</div>
+
+        </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Initiate Call</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/datatables/jquery.dataTables.min.js"></script>
+	<script src="js/datatables/dataTables.bootstrap.min.js"></script>
+   
+    <script src="js/app.js"></script>
+    <!-- Menu Toggle Script -->
+    <script>
+    
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+
+
+
+    </script>
+    
+    
+</body>
+
+</html>

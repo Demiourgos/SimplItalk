@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSSample</title>
+    <script src="js/jquery.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    $(function() {
+        //id:"57e4f07b418a822e2901a738"
+        var params = {
+            
+        };
+
+        var bearer = "";
+
+        $.ajax({
+            url: "https://cloudlevel.io/token",
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","f9eed491bbd544578b2338b45720e161");
+            },
+            type: "GET",
+            // Request body
+            data: "",
+        })
+        .done(function(data) {
+
+            
+            console.log(data.bearer)
+
+            $.ajax({
+            url: "https://bluebank.azure-api.net/api/v0.6.3/customers" + $.param(params),
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","f9eed491bbd544578b2338b45720e161");
+
+                xhrObj.setRequestHeader("bearer",data.bearer);
+            },
+            type: "GET",
+            // Request body
+            data: "",
+            })
+            .done(function(data) {
+                alert(data);
+            })
+            .fail(function() {
+                alert("error");
+            }); 
+        })
+    });
+</script>
+</body>
+</html>

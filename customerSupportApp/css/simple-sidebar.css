@@ -133,16 +133,21 @@
     width: calc(100% - 100px);
 }
 
+.hidden {
+    display: none;
+}
+
 .spinner {
   margin-left: 50%;
   width: 70px;
   text-align: center;
+  color: #fff;
 }
 
 .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: #333;
+  background-color: #fff;
 
   border-radius: 100%;
   display: inline-block;
@@ -173,4 +178,17 @@
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
   }
+}
+
+.callout.callout-info {
+    background-color: #357ca5 !important;
+    border-color: #0097bc;
+    border-radius: 3px;
+    margin: 0 0 20px 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+    border-color: #3c8dbc;
+    margin: 10px;
+    color: #fff;
+
 }

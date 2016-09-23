@@ -1,0 +1,23 @@
+{
+  "name": "serviceslayer",
+  "version": "1.0.0",
+  "description": "Service layer for simplitalk",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "morgan": "^1.7.0",
+    "require": "^2.4.20",
+    "twilio": "^2.11.0"
+  },
+  "devDependencies": {
+    "require": "^2.4.20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,211 @@
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Material Design fonts -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Material Design -->
+  <link href="dist/css/bootstrap-material-design.css" rel="stylesheet">
+  <link href="dist/css/ripples.min.css" rel="stylesheet">
+
+
+
+  <!-- Dropdown.js -->
+  <link href="//cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css" rel="stylesheet">
+
+
+  <!-- jQuery -->
+  <script src="node_modules/jquery/dist/jquery.js"></script>
+
+  <!--Angular js-->
+  <script src="node_modules/angular/angular.js"></script>
+
+  <style>
+  /*Css for first Page*/
+  .appHeader{
+    min-height:200px;
+    text-align: center;
+  }
+  .bs-component.appHeader{
+    transform: translateY(50%);
+  }
+  .nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+  }
+
+  .page-1,
+  .page-2,
+  .page-3,
+  .page-4,
+  .page-5,
+  .page-6{
+    display: none;
+  }
+
+  .page-2,
+  .page-3,
+  .page-4,
+  .page-5,
+  .page-6{
+    margin-top:60px;
+  }
+
+  .productsPage{
+    margin-top: 80px;
+    height: calc(100% - 130px)
+  }
+
+  .simpleNavBar{
+    position:absolute;
+    top:0px;
+    left:0px;
+    right:0px;
+    width:100%;
+    background:blue;
+    height:60px;
+  }
+
+  .bottomBar{
+    position:absolute;
+    bottom:0;
+  }
+
+  .stackFromBottom{
+    position: relative;
+    bottom:0;
+  }
+
+  .callMessage{
+    position:relative;
+  }
+
+  .callMessage h1{
+    display:inline-block;
+    vertical-align: middle;
+  }
+
+  /*CSS for second Page*/
+
+  </style>
+</head>
+<body>
+<div class="container-fluid main" ng-app="simplitalk" ng-controller="pageonecontroller">
+     <div class="page page-1">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="bs-component appHeader">
+            <h1>SimpliTalk - RBS</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="inputUsername" class="col-md-2 control-label">User Name</label>
+        <div class="col-md-10">
+          <input type="username" class="form-control" id="inputUsername" placeholder="User Name">
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="inputPassword" class="col-md-2 control-label">Password</label>
+        <div class="col-md-10">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="bs-component col-xs-12">
+          <a id="loginbtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised">Log Me In</a>
+        </div>
+      </div>
+
+      </div>
+
+    <div class="page page-2 productsPage">
+      <div class="simpleNavBar"></div>
+      <div class="list-group" ng-repeat="product in products">
+        <div class="list-group-item">
+          <div class="row-action-primary">
+            <i class="material-icons">folder</i>
+          </div>
+          <div class="row-content">
+            {{product.productName}}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="bs-component col-xs-12 bottomBar">
+          <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised"
+            ng-click="gotoQuestionPage()"
+          >Need support ??</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="page page-3 questionPage">
+      <div class="simpleNavBar"></div>
+      <div class="row">
+        <h1>What is your preferred Language ?</h1>
+      </div>
+      <div class="row bottomBar col-xs-12">
+          <div class="bs-component" ng-repeat="language in languages">
+            <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised"
+              ng-click="setSelectedLanguage(language.name);gotoProductQueryPage(language.name)"
+            >{{language.name}}</a>
+          </div>
+
+          <div class="bs-component">
+          <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised"
+            ng-click="callCustomerSupport()"
+          >Simpli Talk</a>
+        </div>
+      </div>
+    </div>
+    <div class="page page-4 questionPage">
+      <div class="simpleNavBar"></div>
+      <div class="row">
+        <h1>Select the product that you need assistance for</h1>
+      </div>
+      <div class="row bottomBar col-xs-12">
+          <div class="bs-component" ng-repeat="product in products">
+            <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised"
+              ng-click="setSelectedProduct(product.productName);gotoCallPage();"
+            >{{product.productName}}</a>
+          </div>
+
+          <div class="bs-component">
+          <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised"
+            ng-click="callCustomerSupport()"
+          >Simpli Talk</a>
+        </div>
+      </div>
+    </div>
+    <div class="page page-5 questionPage">
+      <div class="simpleNavBar"></div>
+      <div class="callMessage">
+        <h1>{{customerCallMessage}}</h1>
+      </div>
+
+    </div>
+    <div class="page page-6 querstionPage"></div>
+</div>
+
+
+  <script src="node_modules/jquery/dist/jquery.js"></script>
+  <script src="dist/js/material.js"></script>
+  <script src="dist/js/ripples.js"></script>
+  <script src="dist/js/index.js"></script>
+
+</body>
+</html>

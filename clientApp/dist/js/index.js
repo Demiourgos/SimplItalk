@@ -1,3 +1,5 @@
+var serviceUrl = "http://6a717c48.ngrok.io/";
+
 var NavigationController = (function(){
     var currentStep = 1;
 
@@ -30,16 +32,28 @@ var NavigationController = (function(){
 
 angular.module('simplitalk',[]).
 controller('pageonecontroller',function($scope){
-  $scope.selectedVals = {
-    selectedLang:"",
-    setSelectedProduct:""
+  $scope.user = {
+    username:'arun',
+    password:"welcome123"
   };
 
-  $scope.message = "Angular is working";
+  $scope.selectedVals = {
+    selectedLang:"",
+    selectedProduct:""
+  };
+
+  $scope.noOfCustomersInQueue = 0;
 
   $scope.products = [
-    {productName:"Savings Account"},
-    {productName:"DepositAccounts"},
+    {
+     productName:"Savings Account",
+     accountNo:"",
+     balance:""
+    },
+    {
+      productName:"DepositAccounts",
+      accountNo:""
+    },
     {productName:"PPF Account"},
     {productName:"Current Accounts"},
     {productName:"Insurance"},
@@ -62,9 +76,68 @@ controller('pageonecontroller',function($scope){
     NavigationController.gotoStep(4);
   };
 
-  $scope.gotoCallPage = function(){
-    NavigationController.gotoStep(5);
+  $scope.postToService = function(callback){
+    $.ajax({
+        type: "POST",
+        url: serviceUrl + 'simplitalk',
+        data: {
+          username:$scope.user.username,
+          language:$scope.selectedVals.selectedLang,
+          selectedProduct:$scope.selectedVals.selectedProduct
+        },
+        success: function(data){
+           callback(data);
+         },
+        dataType: 'json'
+      });
   };
+
+  $scope.gotoCallPage = function(){
+    $scope.postToService(function(data){
+      console.log('Got request Id ',data.requestId);
+      console.log('Got User name ',data.queueLength);
+      $scope.noOfCustomersInQueue = data.queueLength;
+
+      $scope.secondaryMessage = "No of Customers in Queue"+$scope.noOfCustomersInQueue;
+      $scope.$digest();
+      NavigationController.gotoStep(5);
+      $scope.pollForCustomerSupportQueue(data.requestId);
+    });
+  };
+
+
+  $scope.pollForCustomerSupportQueue = function(requestId){
+    var pollFunction = function(){
+       $.ajax({
+        type: "POST",
+        url: serviceUrl + 'queuePoller',
+        data: {
+          'requestId':requestId
+        },
+        success:function(res){
+          console.log('response ',res);
+          $scope.noOfCustomersInQueue = res.customerStatus.queueLength;
+
+          if(res.customerStatus.queueLength == 0){
+            $scope.secondaryMessage = res.customerStatus.message;
+          }
+
+          $scope.$digest();
+          if(res.supportStatus == 'completed'){
+              console.log('Status ',res.supportStatus);
+              clearTimeout(handle);
+          }
+          else{
+
+            setTimeout(pollFunction,4000);
+          }
+        }
+      });
+    };
+
+    var handle = setTimeout(pollFunction,4000);
+  };
+
 
   $scope.setSelectedLanguage = function(language){
     console.log('language selected is ',language);
@@ -73,9 +146,25 @@ controller('pageonecontroller',function($scope){
 
   $scope.setSelectedProduct = function(product){
     console.log('product selected is ',product);
-    $scope.selectedVals.setSelectedProduct = product;
+    $scope.selectedVals.selectedProduct = product;
   };
 
+  $scope.callCustomerSupport = function(){
+    $scope.gotoCallPage();
+  };
+
+  $scope.login = function(){
+    $.ajax({
+        type: "POST",
+        url: serviceUrl +'customer/login',
+        data: {'username': $scope.user.username,'password':$scope.user.password},
+        success: function(){
+          NavigationController.goNext();
+        },
+        dataType: 'json'
+      });
+
+  };
 
 
 });
@@ -86,19 +175,7 @@ controller('pageonecontroller',function($scope){
 var LoginPage = (function(){
   var init = function(){
     NavigationController.showCurrentStep();
-    $('#loginbtn').on('click',function(){
 
-
-      /*$.ajax({
-          type: "POST",
-          url: 'http://65c603bb.ngrok.io/customer/login',
-          data: {'username':'test'},
-          success: function(){ debugger; },
-          dataType: 'json'
-        });*/
-
-      NavigationController.goNext();
-    }.bind(this));
 
 
 

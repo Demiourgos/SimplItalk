@@ -186,7 +186,7 @@ controller('pageonecontroller',function($scope){
 var LoginPage = (function(){
   var init = function(){
     NavigationController.showCurrentStep();
-
+    window.scrollTo(0,1);
 
 
 

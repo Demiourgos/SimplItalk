@@ -4,6 +4,7 @@ var queuePollerInterval= "";
 var BASE_URL = "http://b8fdfcb4.ap.ngrok.io";
 
 function CustomerSupport(){
+
 }
 
 CustomerSupport.prototype.showModal = function(first_argument) {

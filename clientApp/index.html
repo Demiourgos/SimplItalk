@@ -86,13 +86,19 @@
     bottom:0;
   }
 
-  .callMessage{
+  .centeredMessage{
     position:relative;
+    margin-top: 300px;
   }
 
-  .callMessage h1{
+  .page h1,h4{
+    padding-left: 16px;
+  }
+
+  .centeredMessage h1{
     display:inline-block;
     vertical-align: middle;
+    padding-left: 16px;
   }
 
   /*CSS for second Page*/
@@ -113,20 +119,20 @@
       <div class="row">
         <label for="inputUsername" class="col-md-2 control-label">User Name</label>
         <div class="col-md-10">
-          <input type="username" class="form-control" id="inputUsername" placeholder="User Name">
+          <input type="text" ng-model="user.username" class="form-control" id="inputUsername" placeholder="User Name">
         </div>
       </div>
 
       <div class="row">
         <label for="inputPassword" class="col-md-2 control-label">Password</label>
         <div class="col-md-10">
-          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+          <input type="password" ng-model="user.password" class="form-control" id="inputPassword" placeholder="Password">
         </div>
       </div>
 
       <div class="row">
         <div class="bs-component col-xs-12">
-          <a id="loginbtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised">Log Me In</a>
+          <a id="loginbtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised btn-primary" ng-click="login()">Log Me In</a>
         </div>
       </div>
 
@@ -146,7 +152,7 @@
       </div>
       <div class="row">
         <div class="bs-component col-xs-12 bottomBar">
-          <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised"
+          <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised btn-primary"
             ng-click="gotoQuestionPage()"
           >Need support ??</a>
         </div>
@@ -166,7 +172,7 @@
           </div>
 
           <div class="bs-component">
-          <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised"
+          <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised btn-primary"
             ng-click="callCustomerSupport()"
           >Simpli Talk</a>
         </div>
@@ -185,7 +191,7 @@
           </div>
 
           <div class="bs-component">
-          <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised"
+          <a id="productsSimplyTalkBtn" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised btn-primary"
             ng-click="callCustomerSupport()"
           >Simpli Talk</a>
         </div>
@@ -193,8 +199,9 @@
     </div>
     <div class="page page-5 questionPage">
       <div class="simpleNavBar"></div>
-      <div class="callMessage">
+      <div class="centeredMessage">
         <h1>{{customerCallMessage}}</h1>
+        <h4>{{secondaryMessage}}</h4>
       </div>
 
     </div>

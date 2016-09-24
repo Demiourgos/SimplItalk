@@ -1,7 +1,10 @@
 var currentRequest = "";
+var listenCustpollInterval = "";
+var queuePollerInterval= "";
+var BASE_URL = "http://b8fdfcb4.ap.ngrok.io";
 
 function CustomerSupport(){
-	this.BASE_URL = "http://959ff344.ap.ngrok.io";
+
 }
 
 CustomerSupport.prototype.showModal = function(first_argument) {
@@ -9,7 +12,14 @@ CustomerSupport.prototype.showModal = function(first_argument) {
 	$('#myModal').removeClass('hidden');
 	$('#myModal').modal({
 		width:"800px"
-	})
+	});
+};
+
+CustomerSupport.prototype.hideModal = function(first_argument) {
+	//alert("sdasd");
+	$('#myModal').addClass('hidden');
+	$('#myModal').modal('hide'); 
+	
 };
 
 CustomerSupport.prototype.fillModal = function(obj,newReq) {
@@ -47,13 +57,13 @@ CustomerSupport.prototype.frameTables = function(first_argument) {
 
 CustomerSupport.prototype.initCall = function() {
 
-	var url = this.BASE_URL+"/call";
+	var url = BASE_URL+"/call";
 	
 
 	$.ajax({ 
    		url: url, 
    		success: function(data) {
-   	     	console.log(data);
+
    	     	$("#initCall").addClass("hidden");
    	     	CustomerSupportObj.requestCallStatus();
    		},
@@ -66,32 +76,49 @@ CustomerSupport.prototype.initCall = function() {
 
 CustomerSupport.prototype.requestCallStatus = function(data) {
 
+	var url = BASE_URL+"/queuePoller";
 
+	$("#callStatus .StatusPart").html("Processing...");
 
-	var url = this.BASE_URL+"/queuePoller";
-	$("#callStatus").html("Processing...");
+	queuePollerInterval = setInterval(CustomerSupportObj.queuePollerAjaxCall, 3000);
+	
 
-	setInterval(function() {
-		$.ajax({ 
+}
+
+CustomerSupport.prototype.queuePollerAjaxCall = function() {
+
+	var url = BASE_URL+"/queuePoller";
+
+	$.ajax({ 
 	   		url: url, 
 	   		success: function(data) {
-	   	     	console.log(data);
+	   	     	
 	   	     	$(".spinner").addClass("hidden");
-	   	     	$("#callStatus").html(data.supportStatus);
+
+	   	     	$("#callStatus .StatusPart").html(data.supportStatus);
+
+	   	     	if(data.supportStatus == "completed") {
+
+	   	     		$("#callStatus .StatusPart").html("");
+	   	     		CustomerSupportObj.hideModal();
+	   	     		$(".spinner, #initCall").removeClass("hidden");
+	   	     		clearInterval(queuePollerInterval);
+	   	     		CustomerSupportObj.listenCustomers();
+
+	   	     	}
+
 	   		},
 	   		method: "POST",
 	   		data: {requestId: currentRequest.requestId},
 	   		dataType: "json"
-	   	});
-   	}, 3000);
+	});
 
 }
 
-CustomerSupport.prototype.listenCustomers = function() {
+CustomerSupport.prototype.listenCustomersAjaxCall = function() {
 
-	var url = this.BASE_URL+"/requestPoller";
+		   var url = BASE_URL+"/requestPoller";
 
-	   setInterval(function() {
 	       $.ajax(
 	       	{ 
 	       		url: url, 
@@ -101,18 +128,23 @@ CustomerSupport.prototype.listenCustomers = function() {
 
 	       				currentRequest = data.newRequest;
 	       				CustomerSupportObj.showModal();
+	       				$("#callStatus, .spinner").addClass("hidden");
+	       				clearInterval(listenCustpollInterval);
 	       				CustomerSupportObj.fillModal(data.newRequest.customerInfo,data.newRequest);
 
 	       			}
-
 	       	     	
 	       		},
 	       		method: "GET",
 	       		dataType: "json"
 	       	});
-	    }, 5000);
-	
-	
+	   
+
+}
+
+CustomerSupport.prototype.listenCustomers = function() {
+
+	   listenCustpollInterval = setInterval(CustomerSupportObj.listenCustomersAjaxCall, 5000);
 
 }
 

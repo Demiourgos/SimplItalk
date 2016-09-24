@@ -1,7 +1,7 @@
 var currentRequest = "";
 
 function CustomerSupport(){
-	this.BASE_URL = "http://6a717c48.ngrok.io";
+	this.BASE_URL = "http://959ff344.ap.ngrok.io";
 }
 
 CustomerSupport.prototype.showModal = function(first_argument) {

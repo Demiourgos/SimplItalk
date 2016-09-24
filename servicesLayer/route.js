@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var userHub = require('./hub/UserHub');
 var _ = require('underscore');
 var customerRequesetHub = [];
+var supportUserId = 'vignesh';
 
 module.exports = function(app){
 	app.use(morgan('combined'));
@@ -18,7 +19,7 @@ module.exports = function(app){
 	app.post('/customer/login', function(req, res){
 		res.header("Access-Control-Allow-Origin", "*");
 		res.header("Access-Control-Allow-Headers", "X-Requested-With");
-		var userId 		= req.body.username,
+		var userId 		= req.body.username.toLowerCase(),
 			password 	= req.body.password,
 			userObj 	= userHub[userId];
 		console.log('login requested by ', userId, password, userObj);
@@ -37,7 +38,7 @@ module.exports = function(app){
 	app.post('/simplitalk', function(req, res) {
 		res.header("Access-Control-Allow-Origin", "*");
 		res.header("Access-Control-Allow-Headers", "X-Requested-With");
-		var userId = req.body.username,
+		var userId = req.body.username.toLowerCase(),
 			requestId = new Date().valueOf();
 		customerRequesetHub.push({
 			customerInfo: {
@@ -52,10 +53,13 @@ module.exports = function(app){
 			language: req.body.language,
 			requestId: requestId,
 			status: 0
-		});		
+		});
+		console.log('============================================================================================================================');
+		console.log('CUSTOMER REQUEST ', customerRequesetHub[customerRequesetHub.length - 1]);
 		console.log('customer service requested by '+ userId +', requestId : ' + requestId + '. Queue Length : customerRequesetHub.queueLength');
+		console.log('============================================================================================================================');
 		res.send({
-			queueLength: customerRequesetHub.length,
+			queueLength: _.filter(customerRequesetHub, function(a){return a.status == 0;}).length,
 			requestId: requestId
 		});
 	});
@@ -63,7 +67,6 @@ module.exports = function(app){
 	app.get('/requestPoller', function(req, res) {
 		res.header("Access-Control-Allow-Origin", "*");
 		res.header("Access-Control-Allow-Headers", "X-Requested-With");
-		var supportUserId = 'hari';
 		//check if the user has any ongoing status
 		var newReq;
 		if(_.every(customerRequesetHub, function(a){return a.status !== 1;})){
@@ -83,7 +86,7 @@ module.exports = function(app){
 		var requestId = req.body.requestId;
 		console.log('REQUEST ID ', requestId);
 		var requestToProcess = _.find(customerRequesetHub, function(a){return a.requestId == requestId});
-		var numberToCall = userHub['hari'].number;
+		var numberToCall = userHub[supportUserId].number;
 
 		twilioClient.makeCall(numberToCall, function(err, call) {
 			requestToProcess.sid = call.sid;
@@ -100,7 +103,7 @@ module.exports = function(app){
 		console.log("Call SID : ", sid);
 		if(requestToUpdate){
 			requestToUpdate.CallStatus = req.body.CallStatus;
-			if(requestToUpdate.CallStatus == 'in-progress' && req.body.CallStatus == 'completed'){
+			if(req.body.CallStatus == 'completed'){
 				console.log("Updated to complete!!!");
 				requestToUpdate.status = 3;
 			}
@@ -153,13 +156,13 @@ module.exports = function(app){
 				customerStatus.message = "Call completed. Please leave your feedback."
 			}
 		}
-		if(requestToProcess.CallStatus == 'ringing'){
+		if(requestToProcess && requestToProcess.CallStatus == 'ringing'){
 			requestToProcess.CallStatus = "dialing";
 		}
 
 		res.send(200, {
 			customerStatus: customerStatus,
-			supportStatus: requestToProcess.CallStatus
+			supportStatus: (requestToProcess || {}).CallStatus
 		});
 	});
 
@@ -167,8 +170,20 @@ module.exports = function(app){
 		res.header("Access-Control-Allow-Origin", "*");
 		res.header("Access-Control-Allow-Headers", "X-Requested-With");
 		customerRequesetHub.forEach(function(a) {
+			if(a.status == 1){
+				a.status = 0;
+			}
+		});
+		res.end('status resetted');
+	});
+
+	app.get('/hardResetStatus', function(req, res) {
+		res.header("Access-Control-Allow-Origin", "*");
+		res.header("Access-Control-Allow-Headers", "X-Requested-With");
+		customerRequesetHub.forEach(function(a) {
 			a.status = 0;
 		});
+		res.end('status resetted');
 	});
 
 };

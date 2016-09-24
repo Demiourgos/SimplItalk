@@ -1,4 +1,4 @@
-var serviceUrl = "http://6a717c48.ngrok.io/";
+var serviceUrl = "http://b8fdfcb4.ap.ngrok.io/";
 
 var NavigationController = (function(){
     var currentStep = 1;
@@ -33,7 +33,7 @@ var NavigationController = (function(){
 angular.module('simplitalk',[]).
 controller('pageonecontroller',function($scope){
   $scope.user = {
-    username:'arun',
+    username:'hari',
     password:"welcome123"
   };
 
@@ -66,6 +66,8 @@ controller('pageonecontroller',function($scope){
     {name :"Tamil"}
   ];
 
+  $scope.isCallCompleted = false;
+
   $scope.customerCallMessage = "Your call has been placed successfully !!";
 
   $scope.gotoQuestionPage = function(){
@@ -76,16 +78,20 @@ controller('pageonecontroller',function($scope){
     NavigationController.gotoStep(4);
   };
 
+  var isServiceCalled = false;
+
   $scope.postToService = function(callback){
+    isServiceCalled = true;
     $.ajax({
         type: "POST",
         url: serviceUrl + 'simplitalk',
         data: {
-          username:$scope.user.username,
+          username:$scope.user.username.toLowerCase(),
           language:$scope.selectedVals.selectedLang,
           selectedProduct:$scope.selectedVals.selectedProduct
         },
         success: function(data){
+          isServiceCalled = false;
            callback(data);
          },
         dataType: 'json'
@@ -93,12 +99,16 @@ controller('pageonecontroller',function($scope){
   };
 
   $scope.gotoCallPage = function(){
+    if(isServiceCalled){
+      return;
+    }
+
     $scope.postToService(function(data){
       console.log('Got request Id ',data.requestId);
       console.log('Got User name ',data.queueLength);
       $scope.noOfCustomersInQueue = data.queueLength;
 
-      $scope.secondaryMessage = "No of Customers in Queue"+$scope.noOfCustomersInQueue;
+      $scope.secondaryMessage = "No of Customers in Queue  - "+$scope.noOfCustomersInQueue;
       $scope.$digest();
       NavigationController.gotoStep(5);
       $scope.pollForCustomerSupportQueue(data.requestId);
@@ -122,20 +132,21 @@ controller('pageonecontroller',function($scope){
             $scope.secondaryMessage = res.customerStatus.message;
           }
 
-          $scope.$digest();
           if(res.supportStatus == 'completed'){
               console.log('Status ',res.supportStatus);
+              $scope.isCallCompleted = true;
+
               clearTimeout(handle);
           }
           else{
-
-            setTimeout(pollFunction,4000);
+            setTimeout(pollFunction,1000);
           }
+          $scope.$digest();
         }
       });
     };
 
-    var handle = setTimeout(pollFunction,4000);
+    var handle = setTimeout(pollFunction,1000);
   };
 
 
@@ -157,7 +168,7 @@ controller('pageonecontroller',function($scope){
     $.ajax({
         type: "POST",
         url: serviceUrl +'customer/login',
-        data: {'username': $scope.user.username,'password':$scope.user.password},
+        data: {'username': $scope.user.username.toLowerCase(),'password':$scope.user.password},
         success: function(){
           NavigationController.goNext();
         },

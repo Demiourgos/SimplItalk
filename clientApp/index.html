@@ -12,7 +12,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Bootstrap -->
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
+
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Bootstrap Material Design -->
   <link href="dist/css/bootstrap-material-design.css" rel="stylesheet">
@@ -21,7 +23,7 @@
 
 
   <!-- Dropdown.js -->
-  <link href="//cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css" rel="stylesheet">
+  <!--<link href="//cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css" rel="stylesheet">-->
 
 
   <!-- jQuery -->
@@ -35,9 +37,12 @@
   .appHeader{
     min-height:200px;
     text-align: center;
+
   }
   .bs-component.appHeader{
-    transform: translateY(50%);
+    /*transform: translateY(50%);*/
+    transform: translateY(10%);
+background: url(https://www.rbs.in/images/rbs-logo.gif) no-repeat center;
   }
   .nopadding {
    padding: 0 !important;
@@ -72,7 +77,7 @@
     left:0px;
     right:0px;
     width:100%;
-    background:blue;
+    background:#003480;
     height:60px;
   }
 
@@ -101,6 +106,24 @@
     padding-left: 16px;
   }
 
+  .list-group{
+    overflow: scroll;
+    height: calc(100% - 90px);
+  }
+
+  .btn-primary{
+    background: #003480!important;
+  }
+
+  a#loginbtn {
+    background: #003480;
+  }
+
+  textarea{
+    width: 100%;
+    height: 100px;  
+  }
+
   /*CSS for second Page*/
 
   </style>
@@ -111,7 +134,7 @@
       <div class="row">
         <div class="col-md-4">
           <div class="bs-component appHeader">
-            <h1>SimpliTalk - RBS</h1>
+            <h1>SimpliTalk</h1>
           </div>
         </div>
       </div>
@@ -140,8 +163,8 @@
 
     <div class="page page-2 productsPage">
       <div class="simpleNavBar"></div>
-      <div class="list-group" ng-repeat="product in products">
-        <div class="list-group-item">
+      <div class="list-group">
+        <div class="list-group-item" ng-repeat="product in products">
           <div class="row-action-primary">
             <i class="material-icons">folder</i>
           </div>
@@ -200,8 +223,15 @@
     <div class="page page-5 questionPage">
       <div class="simpleNavBar"></div>
       <div class="centeredMessage">
-        <h1>{{customerCallMessage}}</h1>
-        <h4>{{secondaryMessage}}</h4>
+
+        <h1>{{secondaryMessage}}</h1>
+        <div ng-show="isCallCompleted">
+          <textarea ></textarea>
+          <a id="Submit" href="javascript:void(0)" class="btn btn-default btn-lg btn-block btn-raised btn-primary"
+
+          >Simpli Talk</a>
+        </div>
+
       </div>
 
     </div>

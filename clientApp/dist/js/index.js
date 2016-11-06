@@ -1,4 +1,4 @@
-var serviceUrl = "http://b8fdfcb4.ap.ngrok.io/";
+var serviceUrl = "http://hariramnandagopal.com/rbsivr_demo/SimplItalk/servicesLayer/";
 
 var NavigationController = (function(){
     var currentStep = 1;

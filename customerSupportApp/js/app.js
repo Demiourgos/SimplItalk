@@ -1,7 +1,7 @@
 var currentRequest = "";
 var listenCustpollInterval = "";
 var queuePollerInterval= "";
-var BASE_URL = "http://hariramnandagopal.com/rbsivr_demo/SimplItalk/servicesLayer/";
+var BASE_URL = "http://173.255.234.128:3000/";
 
 function CustomerSupport(){
 

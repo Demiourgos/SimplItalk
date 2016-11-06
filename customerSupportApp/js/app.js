@@ -1,7 +1,7 @@
 var currentRequest = "";
 var listenCustpollInterval = "";
 var queuePollerInterval= "";
-var BASE_URL = "http://b8fdfcb4.ap.ngrok.io";
+var BASE_URL = "http://hariramnandagopal.com/rbsivr_demo/SimplItalk/servicesLayer/";
 
 function CustomerSupport(){
 

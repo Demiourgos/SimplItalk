@@ -1,4 +1,4 @@
-var serviceUrl = "http://hariramnandagopal.com/rbsivr_demo/SimplItalk/servicesLayer/";
+var serviceUrl = "http://173.255.234.128:3000/";
 
 var NavigationController = (function(){
     var currentStep = 1;

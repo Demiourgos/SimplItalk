@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var userHub = require('./hub/UserHub');
 var _ = require('underscore');
 var customerRequesetHub = [];
-var supportUserId = 'vignesh';
+var supportUserId = 'hari';
 
 module.exports = function(app){
 	app.use(morgan('combined'));
@@ -113,6 +113,9 @@ module.exports = function(app){
 	});
 
 	app.post('/callinprogress', function(req, res){
+		console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+		console.log('RESPONSE FROM TWILIO!!!! Call attended by rep.');
+		console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 		res.header("Access-Control-Allow-Origin", "*");
 		res.header("Access-Control-Allow-Headers", "X-Requested-With");
 		var sid = req.body.CallSid;

@@ -8,8 +8,8 @@ module.exports = {
 		client.makeCall({
 			to: numberToCall,
 			from: appConfig.TWILIO.SUPPORT_NUMBER,
-			url: appConfig.BASE_URL + "/callinprogress",
-			statusCallback: appConfig.BASE_URL + "/trackcall",
+			url: appConfig.BASE_URL + "callinprogress",
+			statusCallback: appConfig.BASE_URL + "trackcall",
 		    statusCallbackMethod: "POST",
 		    statusCallbackEvent: ["queued", "initiated", "ringing", "answered", "completed", "in-progress", "busy", "failed", "no-answer", "canceled"]
 		}, callback);
@@ -22,7 +22,7 @@ module.exports = {
 			language:'en-gb'
 		})
 		.dial({
-            action: appConfig.BASE_URL + "/dialCallStatus"
+            action: appConfig.BASE_URL + "dialCallStatus"
         }, customerNumber);
         return res.toString();
 	}
